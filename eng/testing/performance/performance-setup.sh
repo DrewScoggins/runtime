@@ -341,7 +341,7 @@ else
     if [[ -n "$perf_fork" ]]; then
         git clone --branch $perf_fork_branch --depth 1 --quiet $perf_fork $performance_directory
     else
-        git clone --branch main --depth 1 --quiet https://github.com/dotnet/performance.git $performance_directory
+        git clone --branch Remove7.0Workaround --depth 1 --quiet https://github.com/DrewScoggins/performance.git $performance_directory
     fi
     # uncomment to use BenchmarkDotNet sources instead of nuget packages
     # git clone https://github.com/dotnet/BenchmarkDotNet.git $benchmark_directory
