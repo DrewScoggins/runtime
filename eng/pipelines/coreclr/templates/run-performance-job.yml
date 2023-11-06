@@ -138,7 +138,7 @@ jobs:
       - ${{ if eq( parameters.osGroup, 'osx') }}:
         - HelixPreCommand: $(HelixPreCommandStemMac);$(ExtraMSBuildLogsLinux)
         - HelixPostCommand: 'set PYTHONPATH=%ORIGPYPATH%'
-        - IsInternal: -Internal
+        - IsInternal: --internal
       - ${{ if and(ne(parameters.osGroup, 'windows'), ne( parameters.osGroup, 'osx')) }}:
         - ${{ if eq(parameters.osSubGroup, '_musl') }}:
           - HelixPreCommand: $(HelixPreCommandStemMusl);$(ExtraMSBuildLogsLinux)
