@@ -139,7 +139,7 @@ jobs:
         - HelixPreCommand: $(HelixPreCommandStemMac);$(ExtraMSBuildLogsLinux)
         - HelixPostCommand: 'set PYTHONPATH=%ORIGPYPATH%'
         - IsInternal: -Internal
-      - ${{ if ne(parameters.osGroup, 'windows') }}:
+      - ${{ if and(ne(parameters.osGroup, 'windows'), ne( parameters.osGroup, 'osx')) }}:
         - ${{ if eq(parameters.osSubGroup, '_musl') }}:
           - HelixPreCommand: $(HelixPreCommandStemMusl);$(ExtraMSBuildLogsLinux)
           - HelixPostCommand: 'export PYTHONPATH=$ORIGPYPATH'
@@ -155,6 +155,10 @@ jobs:
       - ${{ if eq( parameters.osGroup, 'windows') }}:
         - HelixPreCommand: $(HelixPreCommandStemWindows);$(ExtraMSBuildLogsWindows)
         - HelixPostCommand: 'export PYTHONPATH=$ORIGPYPATH;${{ parameters.collectHelixLogsScript }}'
+      - ${{ if eq( parameters.osGroup, 'osx') }}:
+        - HelixPreCommand: $(HelixPreCommandStemMac);$(ExtraMSBuildLogsLinux)
+        - HelixPostCommand: 'set PYTHONPATH=%ORIGPYPATH%'
+        - IsInternal: -Internal
       - ${{ if ne(parameters.osGroup, 'windows') }}:
         - HelixPreCommand: $(HelixPreCommandStemLinux);$(ExtraMSBuildLogsLinux);
         - HelixPostCommand: 'export PYTHONPATH=$ORIGPYPATH;${{ parameters.collectHelixLogsScript }}'
