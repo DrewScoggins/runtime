@@ -115,10 +115,10 @@ jobs:
         python3 -m venv $HELIX_WORKITEM_PAYLOAD/.venv &&
         source $HELIX_WORKITEM_PAYLOAD/.venv/bin/activate &&
         export PYTHONPATH= &&
-        python3 -m pip install --user -U pip &&
+        python3 -m pip install -U pip &&
         pip3 install urllib3==1.26.15 &&
-        pip3 install --user azure.storage.blob==12.0.0 &&
-        pip3 install --user azure.storage.queue==12.0.0 &&
+        pip3 install azure.storage.blob==12.0.0 &&
+        pip3 install azure.storage.queue==12.0.0 &&
         sudo apt-get update &&
         export PERFLAB_UPLOAD_TOKEN="$(HelixPerfUploadTokenValue)"
         || export PERF_PREREQS_INSTALL_FAILED=1;
