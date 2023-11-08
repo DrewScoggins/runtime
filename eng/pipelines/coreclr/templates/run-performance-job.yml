@@ -29,6 +29,7 @@ parameters:
   helixTypeSuffix: ''             # optional -- appends to HelixType
   collectHelixLogsScript: ''      # optional -- script to collect the logs, and artifacts helpful for debugging failures
   additionalSetupParameters: ''   # optional -- additional setup parameters that are job-specific
+  perfForkToUse: {'https://github.com/DrewScoggins/performance2', 'DiagRestore'} # url, branch
 
 jobs:
 - template: xplat-pipeline-job.yml
@@ -54,7 +55,9 @@ jobs:
     variables:
     - ${{ each variable in parameters.variables }}:
       - ${{insert}}: ${{ variable }}
-
+    - name: _perfForkArg
+      ${{ if ne(parameters.perfForkToUse.url, '') }}:
+        value: --perffork ${{ parameters.perfForkToUse.url }} --perfforkbranch ${{ coalesce(parameters.perfForkToUse.branch, 'main') }}
     - IsInternal: ''
     - HelixApiAccessToken: ''
     - ${{ if and(eq(parameters.runtimeType, 'wasm'), in(variables['Build.Reason'], 'PullRequest')) }}:
@@ -192,11 +195,19 @@ jobs:
             _Framework: ${{ framework }}
     steps:
     - ${{ parameters.steps }}
+<<<<<<< HEAD
     - powershell: $(Build.SourcesDirectory)\eng\testing\performance\performance-setup.ps1 $(IsInternal)$(Interpreter) -Framework $(_Framework) -Kind ${{ parameters.runKind }} -LogicalMachine ${{ parameters.logicalMachine }} ${{ parameters.pgoRunType }} ${{ parameters.physicalPromotionRunType }} ${{ parameters.r2rRunType }} -ExperimentName '${{ parameters.experimentName }}' -UseLocalCommitTime ${{ parameters.extraSetupParameters }}
       displayName: Performance Setup (Windows)
       condition: and(succeeded(), eq(variables['Agent.Os'], 'Windows_NT'))
       continueOnError: ${{ parameters.continueOnError }}
     - script: $(Build.SourcesDirectory)/eng/testing/performance/performance-setup.sh $(IsInternal)$(Interpreter) --framework $(_Framework) --kind ${{ parameters.runKind }} --logicalmachine ${{ parameters.logicalMachine }} ${{ parameters.pgoRunType }} ${{ parameters.physicalPromotionRunType }} ${{ parameters.r2rRunType }} --experimentname '${{ parameters.experimentName }}' --uselocalcommittime ${{ parameters.extraSetupParameters }}
+=======
+    - powershell: $(Build.SourcesDirectory)\eng\testing\performance\performance-setup.ps1 $(IsInternal)$(Interpreter)$(_perfForkArg) -Framework $(_Framework) -Kind ${{ parameters.runKind }} -LogicalMachine ${{ parameters.logicalMachine }} ${{ parameters.pgoRunType }} ${{ parameters.physicalPromotionRunType }} -UseLocalCommitTime ${{ parameters.extraSetupParameters }}
+      displayName: Performance Setup (Windows)
+      condition: and(succeeded(), eq(variables['Agent.Os'], 'Windows_NT'))
+      continueOnError: ${{ parameters.continueOnError }}
+    - script: $(Build.SourcesDirectory)/eng/testing/performance/performance-setup.sh $(IsInternal)$(Interpreter)$(_perfForkArg) --framework $(_Framework) --kind ${{ parameters.runKind }} --logicalmachine ${{ parameters.logicalMachine }} ${{ parameters.pgoRunType }} ${{ parameters.physicalPromotionRunType }} --uselocalcommittime ${{ parameters.extraSetupParameters }}
+>>>>>>> 749fc124589 (Make it work for run-performance-job)
       displayName: Performance Setup (Unix)
       condition: and(succeeded(), ne(variables['Agent.Os'], 'Windows_NT'))
       continueOnError: ${{ parameters.continueOnError }}
