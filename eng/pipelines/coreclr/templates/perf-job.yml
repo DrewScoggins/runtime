@@ -30,7 +30,7 @@ parameters:
   compare: false
   onlySanityCheck: false
   downloadSpecificBuild: null # buildId, pipeline, branchName, project
-  perfForkToUse: {} # url, branch
+  perfForkToUse: {'https://github.com/DrewScoggins/performance2', 'DiagRestore'} # url, branch
   crossBuild: false
 
 ### Perf job
