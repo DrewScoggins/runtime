@@ -35,7 +35,7 @@
     <CoreRun>$(BaseDirectory)/Core_Root/corerun</CoreRun>
     <BaselineCoreRun>$(BaseDirectory)/Baseline_Core_Root/corerun</BaselineCoreRun>
     <HelixPreCommands>$(HelixPreCommands);chmod +x $(PerformanceDirectory)/tools/machine-setup.sh;. $(PerformanceDirectory)/tools/machine-setup.sh</HelixPreCommands>
-    <ArtifactsDirectory>$HELIX_WORKITEM_ROOT/artifacts/BenchmarkDotNet.Artifacts</ArtifactsDirectory>
+    <ArtifactsDirectory>HELIX_WORKITEM_UPLOAD_ROOT/artifacts/BenchmarkDotNet.Artifacts</ArtifactsDirectory>
     <BaselineArtifactsDirectory>$HELIX_WORKITEM_ROOT/artifacts/BenchmarkDotNet.Artifacts_Baseline</BaselineArtifactsDirectory>
     <ResultsComparer>$(PerformanceDirectory)/src/tools/ResultsComparer/ResultsComparer.csproj</ResultsComparer>
     <DotnetExe>$(PerformanceDirectory)/tools/dotnet/$(Architecture)/dotnet</DotnetExe>
