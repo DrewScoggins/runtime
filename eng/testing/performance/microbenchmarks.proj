@@ -144,7 +144,7 @@
         if [ "x$PERF_PREREQS_INSTALL_FAILED" = "x1" ]; then
           echo "\n\n** Error: Failed to install prerequisites **\n\n"; (exit 1);
         else
-          $(WorkItemCommand) --bdn-artifacts $(ArtifactsDirectory) --bdn-arguments="--anyCategories $(BDNCategories) $(ExtraBenchmarkDotNetArguments) $(CoreRunArgument) --partition-count $(PartitionCount) --partition-index %(HelixWorkItem.Index);sleep 3600";
+          $(WorkItemCommand) --bdn-artifacts $(ArtifactsDirectory) --bdn-arguments="--anyCategories $(BDNCategories) $(ExtraBenchmarkDotNetArguments) $(CoreRunArgument) --partition-count $(PartitionCount) --partition-index %(HelixWorkItem.Index)";sleep 3600;
         fi</Command>
       <Command Condition="'$(AGENT_OS)' == 'Windows_NT'">$(WorkItemCommand) --bdn-artifacts $(ArtifactsDirectory) --bdn-arguments="--anyCategories $(BDNCategories) $(ExtraBenchmarkDotNetArguments) $(CoreRunArgument) --partition-count $(PartitionCount) --partition-index %(HelixWorkItem.Index);sleep 3600"</Command>
       <PostCommands Condition="'$(Compare)' == 'true'">$(DotnetExe) run -f $(PERFLAB_Framework) -p $(ResultsComparer) --base $(BaselineArtifactsDirectory) --diff $(ArtifactsDirectory) --threshold 2$(Percent) --xml $(XMLResults);$(FinalCommand)</PostCommands>
