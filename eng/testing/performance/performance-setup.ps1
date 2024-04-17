@@ -58,6 +58,7 @@ if ($Internal) {
         "perfampere" { $Queue = "Windows.Server.Arm64.Perf" }
         "perfviper" { $Queue = "Windows.11.Amd64.Viper.Perf" }
         "cloudvm" { $Queue = "Windows.10.Amd64" }
+        "perfurchin" { $Queue = "Windows.11.Amd64.Urchin.Perf" }
         Default { $Queue = "Windows.11.Amd64.Tiger.Perf" }
     }
     $PerfLabArguments = "--upload-to-perflab-container"
@@ -155,7 +156,7 @@ if ($RunFromPerformanceRepo) {
     robocopy $SourceDirectory $PerformanceDirectory /E /XD $PayloadDirectory $SourceDirectory\artifacts $SourceDirectory\.git
 }
 else {
-    git clone --branch main --depth 1 --quiet https://github.com/dotnet/performance $PerformanceDirectory
+    git clone --branch ARCSpike --depth 1 --quiet https://github.com/DrewScoggins/performance-2 $PerformanceDirectory
 }
 
 if ($MonoDotnet -ne "") {
