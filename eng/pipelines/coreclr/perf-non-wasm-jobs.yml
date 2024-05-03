@@ -296,7 +296,7 @@ jobs:
       buildConfig: release
       runtimeFlavor: coreclr
       platforms:
-      - linux_x64
+      # - linux_x64
       - windows_x64
       jobParameters:
         testGroup: perf
