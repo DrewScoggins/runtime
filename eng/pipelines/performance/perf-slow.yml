@@ -8,6 +8,10 @@ parameters:
 - name: onlySanityCheck
   type: boolean
   default: false
+- name: testFilter
+  displayName: 'BenchmarkDotNet test filter (optional)'
+  type: string
+  default: ' '
 
 trigger:
   batch: true
@@ -63,3 +67,5 @@ extends:
             jobParameters:
               ${{ if parameters.onlySanityCheck }}:
                 onlySanityCheck: true
+              ${{ if and(ne(parameters.testFilter, ''), ne(parameters.testFilter, ' ')) }}:
+                testFilter: ${{ parameters.testFilter }}

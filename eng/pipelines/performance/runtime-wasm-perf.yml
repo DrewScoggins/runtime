@@ -2,6 +2,12 @@
 # wasm jobs. This file is essentially so we can point the pipeline in azdo
 # UI to this, and thus avoid any scheduled triggers
 
+parameters:
+- name: testFilter
+  displayName: 'BenchmarkDotNet test filter (optional)'
+  type: string
+  default: ' '
+
 trigger: none
 
 pr:
@@ -37,6 +43,8 @@ extends:
           runProfile: 'v8'
           jobParameters:
             onlySanityCheck: true
+            ${{ if and(ne(parameters.testFilter, ''), ne(parameters.testFilter, ' ')) }}:
+              testFilter: ${{ parameters.testFilter }}
           #downloadSpecificBuild:
             #buildId: '1878694'
             #pipeline: 'perf-wasm'
