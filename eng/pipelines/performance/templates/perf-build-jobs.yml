@@ -2,22 +2,25 @@ parameters:
   perfBranch: 'main' # Currently only used for building the BDN App
 
 jobs:
+  # TEMP crossgen-only: build only coreclr win-x64/win-x86 (what the crossgen leg needs). Revert toggles to re-enable.
   # build coreclr and libraries
   - template: /eng/pipelines/performance/templates/perf-coreclr-build-jobs.yml
     parameters:
-      linux_x64: true
-      linux_arm64: true
+      linux_x64: false
+      linux_arm64: false
       windows_x64: true
       windows_x86: true
-      android_arm64: true
-      coreclr_r2r_interpreter: true
+      android_arm64: false
+      coreclr_r2r_interpreter: false
 
-  # build mono for AOT
-  - template: /eng/pipelines/performance/templates/perf-mono-build-jobs.yml
-    parameters:
-      mono_x64: true
-      monoAot_x64: true
-      monoAndroid: true
+  # TEMP crossgen-only: mono builds disabled.
+  - ${{ if false }}:
+    # build mono for AOT
+    - template: /eng/pipelines/performance/templates/perf-mono-build-jobs.yml
+      parameters:
+        mono_x64: true
+        monoAot_x64: true
+        monoAndroid: true
 
   # Disabled due to not successfully building at the moment. https://github.com/dotnet/performance/issues/4729
   - ${{ if false }}:
