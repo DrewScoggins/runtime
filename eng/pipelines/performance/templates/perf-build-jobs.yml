@@ -2,11 +2,11 @@ parameters:
   perfBranch: 'main' # Currently only used for building the BDN App
 
 jobs:
-  # TEMP crossgen-only: build only coreclr win-x64/win-x86 (what the crossgen leg needs). Revert toggles to re-enable.
+  # TEMP crossgen-only: build only coreclr win-x64/win-x86/linux-x64 (what the crossgen leg needs). Revert toggles to re-enable.
   # build coreclr and libraries
   - template: /eng/pipelines/performance/templates/perf-coreclr-build-jobs.yml
     parameters:
-      linux_x64: false
+      linux_x64: true
       linux_arm64: false
       windows_x64: true
       windows_x86: true
